@@ -3,21 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class WithDrawal extends Model
+class Withdrawal extends Model
 {
-
     protected $fillable = [
-        'store_balance_id',
+        'store_id',
         'amount',
-        'bank_account_name',
-        'bank_account_number',
         'bank_name',
+        'account_number',
+        'account_name',
         'status',
+        'notes',
+        'processed_at'
     ];
 
-    public function storeBalance()
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'processed_at' => 'datetime'
+    ];
+
+    public function store(): BelongsTo
     {
-        return $this->belongsTo(StoreBalance::class);
+        return $this->belongsTo(Store::class);
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
     }
 }
+
