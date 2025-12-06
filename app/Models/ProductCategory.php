@@ -3,30 +3,31 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class ProductCategory extends Model
 {
-
     protected $fillable = [
-        'parent_id',
-        'image',
         'name',
         'slug',
-        'tagline',
         'description',
+        'icon'
     ];
 
-    public function parent()
+    protected static function boot()
     {
-        return $this->belongsTo(ProductCategory::class, 'parent_id', 'id');
+        parent::boot();
+        
+        static::creating(function ($category) {
+            if (empty($category->slug)) {
+                $category->slug = Str::slug($category->name);
+            }
+        });
     }
-    public function children()
-    {
-        return $this->hasMany(ProductCategory::class, 'parent_id', 'id');
-    } 
 
-    public function products()
+    public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'category_id');
     }
 }

@@ -1,43 +1,59 @@
 <?php
+// app/Models/Store.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Store extends Model
 {
-
     protected $fillable = [
-        'user_id',
+        'buyer_id',
         'name',
+        'description',
         'logo',
-        'about',
+        'banner',
         'phone',
-        'address_id',
-        'city',
+        'email',
         'address',
-        'postal_code',
-        'is_verified',
+        'status',
+        'rejection_reason',
+        'balance'
     ];
 
-    // relationships one store has one owner (user)
-    public function user()
+    protected $casts = [
+        'balance' => 'decimal:2'
+    ];
+
+    public function buyer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'buyer_id');
     }
 
-    public function storeBallance()
-    {
-        return $this->hasOne(StoreBalance::class);
-    }
-
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    public function transactions()
+    public function withdrawals(): HasMany
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Withdrawal::class);
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
     }
 }
