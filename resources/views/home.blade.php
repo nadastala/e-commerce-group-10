@@ -5,8 +5,7 @@
 @section('styles')
 <style>
     .hero-section {
-        background: linear-gradient(rgba(86, 28, 36, 0.7), rgba(86, 28, 36, 0.7)), 
-                    url('{{ asset('images/hero-fashion.png') }}') center/cover no-repeat;
+        background: url('{{ asset('images/hero-fashion.png') }}') center/cover no-repeat;
         color: white;
         padding: 150px 0;
         margin: -40px -15px 40px -15px;
@@ -165,8 +164,6 @@
 <!-- Hero Section -->
 <div class="hero-section">
     <div class="container hero-content">
-        <h1 class="hero-title">SORAE</h1>
-        <p class="hero-subtitle">Discover Premium Fashion from Around the World</p>
         <a href="{{ url('/products') }}" class="btn btn-light btn-lg px-5 py-3">
             <i class="fas fa-shopping-bag"></i> Shop Now
         </a>

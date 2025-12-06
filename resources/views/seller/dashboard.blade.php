@@ -1,12 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Seller Dashboard - SORAE')
-
-@section('styles')
+@section('title', 'Seller Dashboard - SORAE')@section('styles')
 <style>
     .dashboard-hero {
-        background: linear-gradient(rgba(86, 28, 36, 0.8), rgba(86, 28, 36, 0.8)), 
-                    url('{{ asset('images/hero-fashion.png') }}') center/cover no-repeat;
+        background: url('{{ asset('images/hero-fashion.png') }}') center/cover no-repeat;
         color: white;
         padding: 60px 30px;
         border-radius: 15px;
@@ -31,6 +28,8 @@
         Welcome to your seller dashboard
     </p>
 </div>
+
+</h2>
 
 @if(!$store->is_verified)
 <div class="alert alert-warning">
