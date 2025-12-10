@@ -16,11 +16,11 @@ class Store extends Model
         'is_verified' => 'boolean',
     ];
 
-   public function buyer()
+    // Relasi: setiap store dimiliki oleh 1 user (penjual)
+    public function user()
     {
-    return $this->belongsTo(User::class, 'buyer_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
 
     public function products()
     {

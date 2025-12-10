@@ -38,6 +38,7 @@ class StoreController extends Controller
             'postal_code' => 'required|string|max:10',
         ]);
         
+        // ganti buyer_id -> user_id
         $validated['user_id'] = Auth::id();
         $validated['is_verified'] = false;
         
@@ -46,8 +47,7 @@ class StoreController extends Controller
         }
         
         $store = Store::create($validated);
-        
-        // Create store balance
+
         StoreBalance::create([
             'store_id' => $store->id,
             'balance' => 0,
@@ -83,7 +83,6 @@ class StoreController extends Controller
         ]);
         
         if ($request->hasFile('logo')) {
-            // Delete old logo
             if ($store->logo) {
                 Storage::disk('public')->delete($store->logo);
             }
